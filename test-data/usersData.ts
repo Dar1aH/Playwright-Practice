@@ -4,3 +4,9 @@ export const credentials = {
         password: 'ZSgeVQhuU3qkvlG',
     }
 }      
+
+export const userCredentials = {
+    name: 'Daria',
+    lastName: 'Herasymenko',
+    password: '9Fasdfggg'
+}

@@ -1,126 +1,142 @@
-import { expect } from '@playwright/test';
+import { expect, Locator, Page } from "@playwright/test";
 
-class RegistrationForm {
-    elements = {
-        nameInputField: (page: any) => page.locator('//input[@id="signupName"]'),
-        lastNameInputField: (page: any) => page.locator('//input[@id="signupLastName"]'),
-        emailInputField: (page: any) => page.locator('//input[@id="signupEmail"]'),
-        passwordInputField: (page: any) => page.locator('//input[@id="signupPassword"]'),
-        reEnterPasswordField: (page: any) => page.locator('//input[@id="signupRepeatPassword"]'),
-        registerBtn: (page: any) => page.getByText('Register'),
-        headerGarage: (page: any) => page.getByRole('heading', { name: 'Garage' }),
-        errorMessage: (page: any, fieldId: string) =>
-            page.locator(`//input[@id="${fieldId}"]/following-sibling::div[@class="invalid-feedback"]//p`)        
+export default class RegistrationForm {
+    readonly page: Page;
+    readonly nameInputField: Locator;
+    readonly lastNameInputField: Locator;
+    readonly emailInputField: Locator;
+    readonly passwordInputField: Locator;
+    readonly reEnterPasswordField: Locator;
+    readonly registerBtn: Locator;
+    readonly headerGarage: Locator;
 
+    constructor(page: Page) {
+        this.page = page;
+        this.nameInputField = page.locator('//input[@id="signupName"]');
+        this.lastNameInputField = page.locator('//input[@id="signupLastName"]');
+        this.emailInputField = page.locator('//input[@id="signupEmail"]');
+        this.passwordInputField = page.locator('//input[@id="signupPassword"]');
+        this.reEnterPasswordField = page.locator('//input[@id="signupRepeatPassword"]');
+        this.registerBtn = page.getByText('Register');
+        this.headerGarage = page.getByRole('heading', { name: 'Garage' });
     }
 
-    async verifyEmptyFieldErrorByText(
-        page: any,
-        inputField: (page: any) => any,
+    async getErrorMessage(fieldId: string): Promise<Locator> {
+        return this.page.locator(
+            `//input[@id="${fieldId}"]/following-sibling::div[@class="invalid-feedback"]//p`
+        )
+    }
+
+    async verifyFieldError(
+        inputField: Locator,
         fieldId: string,
         expectedErrorText: string
     ): Promise<void> {
-        const field = await inputField(page)
-        const errorMessage = this.elements.errorMessage(page, fieldId)
-        await field.focus()
-        await field.blur()
-        await expect(errorMessage).toBeVisible()
-        await expect(errorMessage).toHaveText(expectedErrorText)
+        const errorMessage = await this.getErrorMessage(fieldId);
+        await inputField.focus();
+        await inputField.blur();
+        await expect(errorMessage).toBeVisible();
+        await expect(errorMessage).toHaveText(expectedErrorText);
     }
 
-    async verifyEmptyNameErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.verifyEmptyFieldErrorByText(page, this.elements.nameInputField,'signupName', expectedErrorText)
+    async verifyEmptyFieldError(inputField: Locator, fieldId: string, expectedErrorText: string): Promise<void> {
+        await this.verifyFieldError(inputField, fieldId, expectedErrorText);
     }
 
-    async verifyEmptyLastNameErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.verifyEmptyFieldErrorByText(page, this.elements.lastNameInputField, 'signupLastName', expectedErrorText)
+    async verifyEmptyNameErrorByText(expectedErrorText: string): Promise<void> {
+        await this.verifyEmptyFieldError(this.nameInputField, 'signupName', expectedErrorText)
     }
 
-    async verifyEmptyEmailErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.verifyEmptyFieldErrorByText(page, this.elements.emailInputField, 'signupEmail', expectedErrorText)
+    async verifyEmptyLastNameErrorByText(expectedErrorText: string): Promise<void> {
+        await this.verifyEmptyFieldError(this.lastNameInputField, 'signupLastName', expectedErrorText)
     }
 
-    async verifyEmptyPasswordErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.verifyEmptyFieldErrorByText(page, this.elements.passwordInputField, 'signupPassword', expectedErrorText)
+    async verifyEmptyEmailErrorByText(expectedErrorText: string): Promise<void> {
+        await this.verifyFieldError(this.emailInputField, 'signupEmail', expectedErrorText)
     }
 
-    async verifyEmptyReEnterPasswordErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.verifyEmptyFieldErrorByText(page, this.elements.reEnterPasswordField, 'signupRepeatPassword', expectedErrorText)
+    async verifyEmptyPasswordErrorByText(expectedErrorText: string): Promise<void> {
+        await this.verifyFieldError(this.passwordInputField, 'signupPassword', expectedErrorText)
     }
 
-    async verifyNameWrongLengthErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.elements.nameInputField(page).fill('A')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.nameInputField,'signupName', expectedErrorText)
+    async verifyEmptyReEnterPasswordErrorByText(expectedErrorText: string): Promise<void> {
+        await this.verifyFieldError(this.reEnterPasswordField, 'signupRepeatPassword', expectedErrorText)
     }
 
-    async verifyNameWrongDataErrorByText(page: any, expectedErrorText: string): Promise<void> {
-        await this.elements.nameInputField(page).fill('一只猫')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.nameInputField,'signupName', expectedErrorText)
+    async verifyNameWrongLengthErrorByText(expectedErrorText: string): Promise<void> {
+        await this.nameInputField.fill('A')
+        await this.verifyEmptyFieldError(this.nameInputField, 'signupName', expectedErrorText)
     }
 
-    async verifyLastNameWrongLengthErrorByText(page:any, expectedErrorText: string): Promise<void> {
-        await this.elements.lastNameInputField(page).fill('A')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.lastNameInputField, 'signupLastName', expectedErrorText)
+    async verifyNameWrongDataErrorByText(expectedErrorText: string): Promise<void> {
+        await this.nameInputField.fill('一只猫')
+        await this.verifyEmptyFieldError(this.nameInputField, 'signupName', expectedErrorText)
     }
 
-    async verifyLastNameWrongDataErrorByText(page:any, expectedErrorText: string): Promise<void> {
-        await this.elements.lastNameInputField(page).fill('一只猫')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.lastNameInputField, 'signupLastName', expectedErrorText)
+    async verifyLastNameWrongLengthErrorByText(expectedErrorText: string): Promise<void> {
+        await this.lastNameInputField.fill('A')
+        await this.verifyEmptyFieldError(this.lastNameInputField, 'signupLastName', expectedErrorText)
     }
 
-    async verifyInvalidEmailByText(page:any, expectedErrorText: string): Promise<void> {
-        await this.elements.emailInputField(page).fill('abcds')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.emailInputField,'signupEmail', expectedErrorText)
+    async verifyLastNameWrongDataErrorByText(expectedErrorText: string): Promise<void> {
+        await this.lastNameInputField.fill('一只猫')
+        await this.verifyEmptyFieldError(this.lastNameInputField, 'signupLastName', expectedErrorText)
     }
 
-    async verifyWrongDataPasswordByText(page:any, expectedErrorText: string): Promise<void> {
-        await this.elements.passwordInputField(page).fill('abc')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.passwordInputField, 'signupPassword', expectedErrorText)
+    async verifyInvalidEmailByText(expectedErrorText: string): Promise<void> {
+        await this.emailInputField.fill('abcds')
+        await this.verifyEmptyFieldError(this.emailInputField, 'signupEmail', expectedErrorText)
+    }
+
+    async verifyWrongDataPasswordByText(expectedErrorText: string): Promise<void> {
+        await this.passwordInputField.fill('abc')
+        await this.verifyEmptyFieldError(this.passwordInputField, 'signupPassword', expectedErrorText)
 
     }
 
-    async verifyPasswordMismatchByText(page:any, expectedErrorText: string): Promise<void> {
-        await this.elements.passwordInputField(page).fill('9Fasdfggg')
-        await this.elements.reEnterPasswordField(page).fill('8Fasdfggg')
-        await this.verifyEmptyFieldErrorByText(page, this.elements.reEnterPasswordField, 'signupRepeatPassword', expectedErrorText)
-    }
-    
-    async enterName(page:any): Promise<void> {
-        await this.elements.nameInputField(page).fill('Daria')
+    async verifyPasswordMismatchByText(expectedErrorText: string): Promise<void> {
+        await this.passwordInputField.fill('9Fasdfggg')
+        await this.reEnterPasswordField.fill('8Fasdfggg')
+        await this.verifyEmptyFieldError(this.reEnterPasswordField, 'signupRepeatPassword', expectedErrorText)
     }
 
-    async enterLastName(page:any): Promise<void> {
-        await this.elements.lastNameInputField(page).fill('Herasymenko')
+    async enterName(name: string): Promise<void> {
+        await this.nameInputField.fill(name)
     }
 
-    async enterEmail(page: any): Promise<void> {
-        const uniqueEmail = `testuser+${Date.now()}@example.com`;
-        await this.elements.emailInputField(page).fill(uniqueEmail);
-    }
-    
-
-    async enterPassword(page:any): Promise<void> {
-        await this.elements.passwordInputField(page).fill('9Fasdfggg')
+    async enterLastName(lastname: string): Promise<void> {
+        await this.lastNameInputField.fill(lastname)
     }
 
-    async reEnterPassword(page:any):Promise<void> {
-        await this.elements.reEnterPasswordField(page).fill('9Fasdfggg')
+    async enterEmail(email: string): Promise<void> {
+        await this.emailInputField.fill(email);
     }
 
-    async verifyRegisterBtnDisabled(page:any):Promise<void> {
-        const registerBtn = await this.elements.registerBtn(page)
-        await expect(registerBtn).toBeDisabled()
+
+    async enterPassword(password: string): Promise<void> {
+        await this.passwordInputField.fill(password)
     }
 
-    async clickRegisterBtn(page:any):Promise<void> {
-        const registerBtn = await this.elements.registerBtn(page)
-        await registerBtn.click()
+    async reEnterPassword(password: string): Promise<void> {
+        await this.reEnterPasswordField.fill(password)
     }
 
-    async verifySuccessfulRegistration(page:any):Promise<void> {
-        const headerGarage = await this.elements.headerGarage(page)
-        await expect(headerGarage).toHaveText('Garage')
+    async verifyRegisterBtnDisabled(isDisabled: boolean): Promise<void> {
+        if (isDisabled) {
+            await expect(this.registerBtn).toBeDisabled()
+        } else {
+            await expect(this.registerBtn).toBeEnabled()
+        }
+    }
+
+
+    async clickRegisterBtn(): Promise<void> {
+        await this.registerBtn.click()
+    }
+
+    async verifySuccessfulRegistration(text: string): Promise<void> {
+        await expect(this.headerGarage).toHaveText(text);
     }
 
 }
-export default RegistrationForm
+
