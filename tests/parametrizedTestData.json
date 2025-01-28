@@ -1,0 +1,54 @@
+[
+  {
+    "inputs": {
+      "firstName": "Alehandro",
+      "lastName": "test1",
+      "email": "some@mail.com",
+      "phone": "5165152222",
+      "address": "Random av. 22"
+    },
+    "selections": {
+      "birthDate": "17 January,1999",
+      "subject": "Social Studies",  
+      "state": "NRC",
+      "city": "Delhi"
+    },
+    "gender": "Male",
+    "hobbies": ["Sports", "Music"]
+  },
+  {
+    "inputs": {
+      "firstName": "Maria",
+      "lastName": "test2",
+      "email": "maria.doe@example.com",
+      "phone": "5165157777",
+      "address": "Baker Street 221B777"
+    },
+    "selections": {
+      "birthDate": "12 March,2002",
+      "subject": "Arts",
+      "state": "Uttar Pradesh",
+      "city": "Lucknow"
+    },
+    "gender": "Female",
+    "hobbies": ["Reading"]
+  },
+  {
+    "inputs": {
+      "firstName": "Liam",
+      "lastName": "test3",
+      "email": "liam.smith@example.com",
+      "phone": "5165159999",
+      "address": "Ocean Drive 99"
+    },
+    "selections": {
+      "birthDate": "5 May,1995",
+      "subject": "Chemistry",
+      "state": "Rajasthan",
+      "city": "Jaiselmer"
+    },
+    "gender": "Other",
+    "hobbies": ["Sports", "Reading", "Music"]
+  }  
+  
+]
