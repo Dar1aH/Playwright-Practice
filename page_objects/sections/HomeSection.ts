@@ -1,21 +1,33 @@
-class HomeSection {
-    elements = {
-        signInBtn: (page:any) => page.getByText('Sign In'),
-        signUpBtn: (page:any) => page.getByText('Sign Up'),
+import { Locator, Page } from "@playwright/test";
+
+export default class HomeSection {
+    readonly page: Page;
+    readonly signInBtn: Locator;
+    readonly signUpBtn: Locator;
+
+
+    constructor(page: Page) {
+        this.page = page
+        this.signInBtn = page.getByText('Sign In');
+        this.signUpBtn = page.getByText('Sign Up');
     }
 
-    async clickSignInBtn(page:any): Promise<void> {
-        const signInBtn = await this.elements.signInBtn(page)
-        await signInBtn.click()
+    async open() {
+        await this.page.goto('/')
+    }
+
+    async clickSignInBtn(): Promise<void> {
+        await this.signInBtn.click();
 
     }
 
-    async clickSignUpBtn(page:any): Promise<void> {
-        const signUpBtn = await this.elements.signUpBtn(page)
-        await signUpBtn.click()
+    async clickSignUpBtn(): Promise<void> {
+        await this.signUpBtn.click();
 
     }
 
 }
 
-export default HomeSection
+
+
+
