@@ -5,15 +5,15 @@ type fixturePages = {
     userGaragePage: GaragePage
 }
 export const test = base.extend<fixturePages>({
-    userGaragePage: async({browser}, user) => {
-        const context = await browser.newContext({
+    userGaragePage: async({browser}, use) => {
+        const context = await browser.newContext({    // Creating a new Browser Context
             storageState: './test-data/states/registeredUserState.json'
         })
-    const page = await context.newPage()
-    const garagePage = new GaragePage(page)
-    await garagePage.open()
-    await user(garagePage)
-    await context.close()
+    const page = await context.newPage() //Creating a new page
+    const garagePage = new GaragePage(page) //Instantiating the GaragePage Object
+    await garagePage.open() // Navigating to the Garage Page with the user already authenticated
+    await use(garagePage) // using the fixture
+    await context.close() // cleaning up
     }
 })
 
