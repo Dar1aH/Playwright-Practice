@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import HomeSection from '../page_objects/sections/HomeSection';
 import RegistrationForm from '../page_objects/forms/RegistrationForm';
-import { userCredentials } from '../test-data/usersData.ts';
+import { credentials } from '../test-data/usersData.ts';
 
 test.describe('Registration form test', () => {
     let homeSection: HomeSection;
@@ -37,56 +37,56 @@ test.describe('Registration form test', () => {
     })
 
     test('Verify the Register button is disabled without name', async () => {
-        await registrationForm.enterLastName(userCredentials.lastName)
+        await registrationForm.enterLastName(credentials.userOne.surname)
         await registrationForm.enterEmail(uniqueEmail)
-        await registrationForm.enterPassword(userCredentials.password)
-        await registrationForm.reEnterPassword(userCredentials.password)
+        await registrationForm.enterPassword(credentials.userOne.password)
+        await registrationForm.reEnterPassword(credentials.userOne.password)
         await registrationForm.verifyRegisterBtnDisabled(true)
 
     })
 
     test('Verify the Register button is disabled without last name', async () => {
-        await registrationForm.enterName(userCredentials.name)
+        await registrationForm.enterName(credentials.userOne.name)
         await registrationForm.enterEmail(uniqueEmail)
-        await registrationForm.enterPassword(userCredentials.password)
-        await registrationForm.reEnterPassword(userCredentials.password)
+        await registrationForm.enterPassword(credentials.userOne.password)
+        await registrationForm.reEnterPassword(credentials.userOne.password)
         await registrationForm.verifyRegisterBtnDisabled(true)
 
     })
 
     test('Verify the Register button is disabled without email', async () => {
-        await registrationForm.enterName(userCredentials.name)
-        await registrationForm.enterLastName(userCredentials.lastName)
-        await registrationForm.enterPassword(userCredentials.password)
-        await registrationForm.reEnterPassword(userCredentials.password)
+        await registrationForm.enterName(credentials.userOne.name)
+        await registrationForm.enterLastName(credentials.userOne.surname)
+        await registrationForm.enterPassword(credentials.userOne.password)
+        await registrationForm.reEnterPassword(credentials.userOne.password)
         await registrationForm.verifyRegisterBtnDisabled(true)
 
     })
 
     test('Verify the Register button is disabled without password', async () => {
-        await registrationForm.enterName(userCredentials.name)
-        await registrationForm.enterLastName(userCredentials.lastName)
+        await registrationForm.enterName(credentials.userOne.password)
+        await registrationForm.enterLastName(credentials.userOne.password)
         await registrationForm.enterEmail(uniqueEmail)
-        await registrationForm.reEnterPassword(userCredentials.password)
+        await registrationForm.reEnterPassword(credentials.userOne.password)
         await registrationForm.verifyRegisterBtnDisabled(true)
 
     })
 
     test('Verify the Register button is disabled without re-enter password', async () => {
-        await registrationForm.enterName(userCredentials.name)
-        await registrationForm.enterLastName(userCredentials.lastName)
+        await registrationForm.enterName(credentials.userOne.name)
+        await registrationForm.enterLastName(credentials.userOne.surname)
         await registrationForm.enterEmail(uniqueEmail)
-        await registrationForm.enterPassword(userCredentials.password)
+        await registrationForm.enterPassword(credentials.userOne.password)
         await registrationForm.verifyRegisterBtnDisabled(true)
 
     })
 
     test('Verify successful registration with valid data', async () => {
-        await registrationForm.enterName(userCredentials.name)
-        await registrationForm.enterLastName(userCredentials.lastName)
-        await registrationForm.enterEmail(uniqueEmail)
-        await registrationForm.enterPassword(userCredentials.password)
-        await registrationForm.reEnterPassword(userCredentials.password)
+        await registrationForm.enterName(credentials.userOne.name)
+        await registrationForm.enterLastName(credentials.userOne.surname)
+        await registrationForm.enterEmail(credentials.userOne.email)
+        await registrationForm.enterPassword(credentials.userOne.password)
+        await registrationForm.reEnterPassword(credentials.userOne.password)
         await registrationForm.verifyRegisterBtnDisabled(false)
         await registrationForm.clickRegisterBtn()
         await registrationForm.verifySuccessfulRegistration('Garage')

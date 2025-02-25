@@ -14,6 +14,7 @@ export default class GaragePage {
     readonly approveRemoveButton: Locator;
     readonly carRemoveNotification: Locator;
 
+
     constructor(page: Page) {
         this.page = page;
         this.addCarButton = page.locator('//button[@class="btn btn-primary"]');
@@ -27,6 +28,7 @@ export default class GaragePage {
         this.removeCarButton = page.locator('//button[@class="btn btn-outline-danger"]');
         this.approveRemoveButton = page.locator('//button[@class="btn btn-danger"]');
         this.carRemoveNotification = page.locator('//div[@class="alert alert-success"]//p[text()="Car removed"]');
+
     }
 
     async open() {
