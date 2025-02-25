@@ -2,7 +2,7 @@
   "cookies": [
     {
       "name": "YSC",
-      "value": "EzqdYchSWUo",
+      "value": "ZpXY3-g57RY",
       "domain": ".youtube.com",
       "path": "/",
       "expires": -1,
@@ -12,40 +12,40 @@
     },
     {
       "name": "__Secure-ROLLOUT_TOKEN",
-      "value": "CO2PgfuMz9jzUBDMo8Xs78GLAxjMo8Xs78GLAw%3D%3D",
+      "value": "CNzn-6L_kJTynQEQ9M2GuOHfiwMY9M2GuOHfiwM%3D",
       "domain": ".youtube.com",
       "path": "/",
-      "expires": 1755043778.893391,
+      "expires": 1756070702.878685,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "VISITOR_INFO1_LIVE",
-      "value": "QIFmA87Z5E8",
+      "value": "buEP6JxmVPA",
       "domain": ".youtube.com",
       "path": "/",
-      "expires": 1755043778.893447,
+      "expires": 1756070702.879764,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "VISITOR_PRIVACY_METADATA",
-      "value": "CgJJRRIcEhgSFhMLFBUWFwwYGRobHB0eHw4PIBAREiEgZg%3D%3D",
+      "value": "CgJJRRIcEhgSFhMLFBUWFwwYGRobHB0eHw4PIBAREiEgVg%3D%3D",
       "domain": ".youtube.com",
       "path": "/",
-      "expires": 1755043778.893501,
+      "expires": 1756070702.879861,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sid",
-      "value": "s%3AQpkML3PbBfmmvAapDxaGDt-1mKb9PyFq.uCm6zuCoM68gkj05Js%2BM%2F82SH1q3OuvJovA8OC1sum0",
+      "value": "s%3A3ML8lO7-g5DsRJlCGBj_t_qvCfF_jaWc.r4Ig%2BVh6c4cWAMZHElVg9vlu4XHxhpTgW327qE0lnfU",
       "domain": ".forstudy.space",
       "path": "/",
-      "expires": 1739578181.604774,
+      "expires": 1740605105.94001,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -57,7 +57,7 @@
       "localStorage": [
         {
           "name": "ytidb::LAST_RESULT_ENTRY_KEY",
-          "value": "{\"data\":{\"hasSucceededOnce\":true},\"expiration\":1742083779591,\"creation\":1739491779591}"
+          "value": "{\"data\":{\"hasSucceededOnce\":true},\"expiration\":1743110703596,\"creation\":1740518703596}"
         }
       ]
     }
